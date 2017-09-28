@@ -1,0 +1,61 @@
+<!-- views/profile.ejs 
+<html>
+  <head>
+   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+        <style>
+            body { padding-top:80px; 
+            }
+            .panel-post {
+                width : 25%
+            }
+        </style>
+  </head>
+  <body>
+
+  <!--========== INFO PERTAINING TO USER ============-->
+    <div class="container-fluid">
+      <div class="panel-body">
+
+       <a href="/logout">
+        <button type="submit" class="btn btn-warning btn-sm" ><i class="  glyphicon glyphicon-log-out"></i></button>
+        </a>
+
+        <h3>  <%= user.google.email %> </h3>
+        UID: <%= user.google.id %>
+
+      </div> 
+    </div>
+  <!-- ============== HTTP POST =====================-->
+    <div class="container-fluid">
+      <div class="panel-post">
+
+        <!-- LOGIN FORM -->
+    <form action="/groupAdd" method="post">
+        <div class="form-group">
+        <label>Add Group</label>
+            <input type="text" class="form-control" name="name" placeholder="Group Name">
+             <input type="text" class="form-control" name="location" placeholder="zipcode">
+        </div>
+       
+        <button type="submit" class="btn btn-warning btn-sm">Add</button>
+    </form>
+
+      </div> 
+    </div>
+
+
+
+
+
+
+
+
+    
+
+
+  </body>
+</html>
+
+-->
+

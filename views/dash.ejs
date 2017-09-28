@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+
+<div class="nav container-fluid">
+  <div >
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+   
+    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addTeam">New Team</button>
+
+
+
+
+
+
+  </div>
+</div>
+
+   
+            <div id="mySidenav" class="sidenav">
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+              <div class="profilepic">
+                 <% if (user.google.picSet) { %>
+                  <img class="center-block img-responsive" src="/profilepics/<%= user.id%>.jpg" alt="Chania">
+                  
+                    <% } %>
+                     <% if (!user.google.picSet) { %>
+                      <img class="center-block img-responsive" src="/profilepics/default.jpg" alt="Chania">
+                  
+                    <% } %>
+                </div>
+                <a href="/profile"> <span class="glyphicon glyphicon-user"></span> Profile</a>
+                <a href="/logout"> <span class="glyphicon glyphicon-log-out"></span> Logout</a>
+
+            </div>
+    
+      
+<div class="container-fluid tiles" id="tiles">
+            <!-- tiles -->
+        <ul id="rig">
+          <% for (var i = 0; i < user.google.teams.length; i++) { %>
+            <li>
+              <a class="rig-cell" href="/team/?id=<%= user.google.teams[i] %>">
+                <img class="rig-img" src="/teampics/default.jpg">
+                <span class="rig-overlay"></span>
+                <span class="rig-text"><%= user.google.teams[i] %></span>
+              </a>
+            </li>
+          <% } %>   
+        </ul>
+
+   
+</div>
+
+      <!-- Modal -->
+  <div class="modal fade" id="addTeam" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create new Team</h4>
+        </div>
+        <div class="modal-body">
+         
+         <div id="new_team_form">
+                            <form name="new_team_form" action="">
+                              <fieldset>
+                                <label for="name" id="name_label">Name</label>
+                                <input type="text" name="name" id="name" size="30" value="" class="text-input" />
+                               
+                               
+                                 
+                                <input type="submit" name="submit" class="button" id="submit_btn" value="Send" />
+                              </fieldset>
+                            </form>
+                        </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "150px";
+    document.getElementById("tiles").style.width = "50%";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("tiles").style.width = "100%";
+}
+
+
+$(function() {
+    $('.error').hide();
+    $(".button").click(function() {
+      // validate and process form here
+      
+      $('.error').hide();
+      var name = $("input#name").val();
+        if (name == "") {
+        $("label#name_error").show();
+        $("input#name").focus();
+        return false;
+      }
+      var dataString = 'name='+ name + 'pic=' + $("input#teampic");
+      //alert (dataString);return false;
+      $.ajax({
+        type: "POST",
+        url: "/teamAdd",
+        data: dataString,
+        success: function(data) {
+          alert("success!");
+          window.location.replace("/team/?id=" + data);
+        }
+      });
+      return false;
+    });
+  });
+
+// goto profile upon clicking profile picture
+$(document).ready(function () {
+  $("#profilepic").click(function () {
+       window.location.replace("/profile");
+  });
+});
+</script>
+     
+
+</body>
+</html>

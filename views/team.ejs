@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+
+<body>
+
+<div class="nav container-fluid">
+
+
+             <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        
+
+</div>
+
+   
+  
+
+
+ 
+</div>
+
+   
+            <div id="mySidenav" class="sidenav">
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+              <div class="profilepic">
+          
+                    <img class="center-block img-responsive" src="/teampics/default.jpg" alt="Chania">
+              
+                </div>
+                <a href="/dash">My Teams</a>
+              
+            </div>
+
+      
+<div class="container-fluid tiles" id="tiles">
+            <!-- tiles -->
+       <ul id="rig">
+<!-- show owner -->
+
+              <li>
+                      <a class="rig-cell" href="#">
+                        <% if (user.google.picSet) { %>
+                       <img class="rig-img" src="/profilepics/<%= team.owner %>.jpg">
+                        <% } else { %>
+                        <img class="rig-img" src="/profilepics/default.jpg">
+                      <% } %>
+                          <span class="rig-overlay"></span>
+                          <span class="rig-text"><%= team.owner %></span>
+                      </a>
+                  </li>
+
+          <% for (var i = 0; i < team.members.length; i++) { %>
+
+              <li>
+                      <a class="rig-cell" href="#">
+                          <a class="rig-cell" href="#">
+                        <% if (user.google.picSet) { %>
+                          <img class="rig-img" src="/profilepics/<%= team.members[i] %>.jpg">
+                        <% } else { %>
+                          <img class="rig-img" src="/profilepics/default.jpg">
+                        <% } %>
+                          <span class="rig-overlay"></span>
+                          <span class="rig-text"><%= team.members[i] %></span>
+                      </a>
+                  </li>
+
+        <% } %> 
+    </ul>
+</div>
+<div class="text-center">
+
+<% if (team.owner == user._id) { %>
+          <form name="new_team_form" action="">
+            <fieldset>
+            <input type="email" name="name" id="name" placeholder="Member Email" size="30" value="" class="text-input" />
+            <input type="hidden" name="teamid" id="teamid" value="<%= team._id %>">
+            <input type="submit" name="submit" class="button" id="submit_btn" value="Add Member" />
+            </fieldset>
+          </form>
+    <% } %>
+</div>
+
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "150px";
+    document.getElementById("tiles").style.width = "50%";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("tiles").style.width = "100%";
+}
+
+// add user to team
+$(function() {
+    $('.error').hide();
+    $(".button").click(function() {
+      // validate and process form here
+      
+      $('.error').hide();
+      var name = $("input#name").val();
+        if (name == "") {
+        $("label#name_error").show();
+        $("input#name").focus();
+        return false;
+      }
+      var teamid = $("input#teamid").val();
+      var dataString = 'name='+ name +"&teamid=" + teamid
+      //alert (dataString);return false;
+      $.ajax({
+        type: "POST",
+        url: "/addUser",
+        data: dataString,
+        success: function(data) {
+          alert("success!");
+      //    window.location.replace("/team/?id=" + data);
+        }
+      });
+      return false;
+    });
+  });
+</script>
+     
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+<style>
+
+html {
+   background-color: #ECEFF1;
+}
+body {
+   background-color: #ECEFF1;
+}
+.nav {
+  background-color: #2196F3;
+  height: 50px;
+}
+
+.profilepic {
+  padding: 10px;
+}
+.side {
+  background-color: red;
+}
+.main {
+  background-color: yellow;
+}
+.sidenav {
+   
+    width: 0;
+    position: fixed;
+    z-index: 1;
+  
+    left: 0;
+    background-color: #ECEFF1;
+    overflow-x: hidden;
+    transition: 1s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #000000;
+    display: block;
+    transition: 0.1s;
+}
+
+.sidenav a:hover {
+    color: #263238;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.tiles {
+  width : 100%;
+    transition: 1s;
+
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.container-fluid {
+
+}
+#rig {
+    max-width:900px;
+    margin:0 auto; /*center aligned*/
+    padding:0;
+    font-size:0; /* Remember to change it back to normal font size if have captions */
+    list-style:none;
+     background-color: #ECEFF1;
+
+
+}
+#rig li {
+    display: inline-block;
+    *display:inline;/*for IE6 - IE7*/
+    width:25%;
+    vertical-align:middle;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+        
+/* The wrapper for each item */
+.rig-cell {
+    margin:2px;
+    box-shadow:0 0 10px rgba(0,0,0,0.3);
+    display:block;
+    position: relative;
+    overflow:hidden;
+
+}
+        
+/* If have the image layer */
+.rig-img {
+    display:block;
+    width: 100%;
+    height: auto;
+    border:none;
+    transform:scale(1);
+    transition:all 1s;
+}
+
+.navbar-header {
+  background-color: #ffffff;
+}
+
+#rig li:hover .rig-img {
+    transform:scale(1.1);
+}
+        
+/* If have the overlay layer */
+.rig-overlay {
+    position: absolute;
+    display:block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background: #000000 no-repeat center 20%;
+    background-size:50px 50px;
+    opacity:0;
+    filter:alpha(opacity=0);/*For IE6 - IE8*/
+    transition:all 0.6s;
+}
+#rig li:hover .rig-overlay {
+    opacity:0.5;
+}
+
+/* If have captions */
+.rig-text {
+    display:block;
+    padding:0 30px;
+    box-sizing:border-box;
+    position:absolute;
+    left:0;
+    width:100%;
+    text-align:center;
+    text-transform:capitalize;
+    font-size:14px;
+    font-weight:bold;
+    font-family: 'Oswald', sans-serif;
+    font-weight:normal!important;
+    top:40%;
+    color:white;
+    opacity:0;
+    filter:alpha(opacity=0);/*For older IE*/
+    transform:translateY(-20px);
+    transition:all .3s;
+}
+#rig li:hover .rig-text {
+    transform:translateY(0px);
+    opacity:0.9;
+}
+
+@media (max-width: 9000px) {
+    #rig li {
+        width:50%;
+    }
+}
+
+@media (max-width: 700px) {
+    #rig li {
+        width:50%;
+    }
+}
+
+@media (max-width: 550px) {
+    #rig li {
+        width:100%;
+    }
+}
+</style>

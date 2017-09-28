@@ -1,0 +1,27 @@
+{
+  "name": "node-authentication",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "^1.0.2",
+    "bson": "^1.0.4",
+    "connect-busboy": "0.0.2",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "~1.0.0",
+    "ejs": "~0.8.5",
+    "email-check": "^1.1.0",
+    "express": "~4.0.0",
+    "express-fileupload": "^0.2.0",
+    "express-session": "~1.0.0",
+    "finalhandler": "^1.0.5",
+    "method-override": "~1.0.0",
+    "metro-dist": "^3.0.17",
+    "mongoose": "^4.11.12",
+    "mongoose-timestamp": "^0.6.0",
+    "morgan": "~1.0.0",
+    "passport": "^0.2.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "~0.1.6",
+    "serve-static": "^1.12.5"
+  }
+}
