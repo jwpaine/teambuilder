@@ -43,36 +43,26 @@
               
             </div>
 
-      
+     
 <div class="container-fluid tiles" id="tiles">
             <!-- tiles -->
        <ul id="rig">
 <!-- show owner -->
 
-              <li>
-                      <a class="rig-cell" href="#">
-                        <% if (user.google.picSet) { %>
-                       <img class="rig-img" src="/profilepics/<%= team.owner %>.jpg">
-                        <% } else { %>
-                        <img class="rig-img" src="/profilepics/default.jpg">
-                      <% } %>
-                          <span class="rig-overlay"></span>
-                          <span class="rig-text"><%= team.owner %></span>
-                      </a>
-                  </li>
+            
 
           <% for (var i = 0; i < team.members.length; i++) { %>
-
+                
               <li>
                       <a class="rig-cell" href="#">
                           <a class="rig-cell" href="#">
-                        <% if (user.google.picSet) { %>
+                        <% if (team.picSet[i]) { %>
                           <img class="rig-img" src="/profilepics/<%= team.members[i] %>.jpg">
                         <% } else { %>
                           <img class="rig-img" src="/profilepics/default.jpg">
                         <% } %>
                           <span class="rig-overlay"></span>
-                          <span class="rig-text"><%= team.members[i] %></span>
+                          <span class="rig-text"><%= team.online[i] %></span>
                       </a>
                   </li>
 

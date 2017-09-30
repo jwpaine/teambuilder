@@ -124,49 +124,54 @@ module.exports = function(app, passport, mongoose) {
       
      });
 
-     app.get('/team', isLoggedIn, function(req, res) {
+    app.get('/team', isLoggedIn, function(req, res) {
        
         var id = req.param('id');
         console.log("Setting team id as active: " + id);
           
-        var o_id = new ObjectId(id);
+          
+                // get details for owner
+                connection.db.collection("teams").findOne({"_id" : ObjectId(id)}, function(err, myTeam){
+                
+                 //   console.log("Owner: " + JSON.stringify(owner));
+            
+                
+ 
+           
+              connection.db.collection("users").find({"google.teams" : ObjectId(id)}, {"google.online" : 1, "google.picSet" : 1}).toArray( function(err, members) {
 
-        // get team
-         connection.db.collection("teams", function(err, collection){
-                    collection.findOne({"_id" : o_id}, function(err, team){
-                            if(err){
-                                res.send(err);
-                            }else{
+            
+                var team = {
+                    owner : '',
+                    members : [],
+                    online : [],
+                    picSet : []
+                }
+                    for (var i = 0; i < members.length; i++) {
+                        team.owner = myTeam.owner
+                        team.members.push(members[i]._id);
+                        team.online.push(members[i].google.online);
+                        team.picSet.push(members[i].google.picSet);
+                    }
 
-                               console.log(JSON.stringify(team));
-                               // build online status and return
-                                var online = [];
-                                connection.db.collection("users").findOne({"_id" : ObjectId(team.owner)}, {"google.online" : true}, function(err, user){
-                                     if(err){
-                                        res.send(err);
-                                    }else{
-                                       online.push(team.owner);
-                                       console.log(online);
+                    console.log(team);
+                
+                  res.render('team.ejs', {
+                        user : req.user, // get the user out of session and pass to template
+                        team : team
+                    });
+            
+               });
 
-                                        res.render('team.ejs', {
-                                        user : req.user, // get the user out of session and pass to template
-                                        team : team,
-                                        online : online
-                                    });
+              });
+           
 
-                                    }
-                                });
-                               
-                                // get online status for owner
+               
 
-                                // get online status from team members
-
-                             
-                            }
-                        });
-                 
-            });
-     });
+                  
+            
+    });
+ 
 
     app.get('/updateteampic', isLoggedIn, function(req, res) {
        
@@ -274,7 +279,7 @@ module.exports = function(app, passport, mongoose) {
                                 }
                             });
                                 // update team for user
-                connection.db.collection("users").update({"_id" : ObjectId(data._id)},{$push : {"google.fteams" : ObjectId(teamid)}}, function(err, team){
+                connection.db.collection("users").update({"_id" : ObjectId(data._id)},{$push : {"google.teams" : ObjectId(teamid)}}, function(err, team){
                                 if(err){
                                     res.send(err);
                                 }
@@ -283,10 +288,9 @@ module.exports = function(app, passport, mongoose) {
 
                            });
 
-                   
+                   }); //first mongo
     
-         });
-
+       
       
 
          console.log("team: " + teamid + " email: " + email + " requester: " + requester);
@@ -321,6 +325,12 @@ module.exports = function(app, passport, mongoose) {
                         throw err;
                     }
 
+                    // add user as member of team
+                    connection.db.collection("teams").update({"_id" : newTeam._id, "owner" : requester},{$push : {"members" : req.user.id}}, function(err, data){
+                                if(err){
+                                    res.send(err);
+                                }
+                            });
                     console.log("Team: " + newTeam._id + "added!");
 
                     connection.db.collection("users", function(err, collection){
